@@ -217,7 +217,7 @@ config.miners.forEach(function(item, i, arr) {
 
     function poll() {
         m.socket.connect(m.port, m.host);
-    };
+    }
 
     if ((typeof c.offline === 'undefined') || !c.offline) {
         poll();

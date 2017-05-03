@@ -1,17 +1,19 @@
 extends layout
 
 block content
-    // Wrapper
-    #wrapper
+    // Row
+    .row
+      .col-md-12
         // Miner info
         #minerInfo
             h2= title
-            table
+            
+            table.table.table-bordered.table.hover
                 thead
                     th Name
                     th Host
                     th Uptime
-                    th ETH/ETC&nbsp;Stats
+                    th ETH&nbsp;Stats
                     th DCR/SIA&nbsp;Stats
                     if hashrates
                         th ETH/ETC&nbsp;HR

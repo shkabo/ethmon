@@ -1,9 +1,23 @@
 doctype html
-html
-    head
-        title= title
-        link(rel='stylesheet', href='/stylesheets/style.css')
-    body
-        block content
-        script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
-        script(src='/javascripts/global.js')
+html(lang='en')
+head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='Ethereum monitoring')
+    link(rel='shortcut icon', href='/favicon.ico')
+    title Starter Template for Bootstrap
+    //Bootstrap core CSS
+    link(href='/css/bootstrap.min.css', rel='stylesheet')
+    //Custom styles for this template
+    link(href='/bootstrap-3.3.1/docs/examples/starter-template/starter-template.css', rel='stylesheet')
+    //HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
+    //if lt IE 9
+    script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
+    script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
+
+body
+  .container
+      block content
+  script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+  script(src='/js/bootstrap.min.js')
+  script(src='/js/global.js')
