@@ -46,9 +46,9 @@ function worker() {
             // Check tolerance
             if ((target !== null) && tolerance) {
                 if (s[0] / 1000 < target * (1 - tolerance)) {
-                    hashrate = '<span class="error">' + hashrate + '</span>';
+                    hashrate = '<span class="text-danger">' + hashrate + '</span>';
                 } else if (s[0] / 1000 > target * (1 + tolerance)) {
-                    hashrate = '<span class="warning">' + hashrate + '</span>';
+                    hashrate = '<span class="text-warning">' + hashrate + '</span>';
                 }
             }
 
@@ -67,10 +67,10 @@ function worker() {
             var tnum = ti ? ti.length : (t.length / 2);
             for (var i = 0; i < tnum; ++i) {
                 var j = (ti ? ti[i] : i) * 2;
-                var temp = t[j] + 'C';
-                var fan = t[j + 1] + '%';
+                var temp = (t[j] === 'undefinded') ? 'Not readable' : t[j] + 'C';
+                var fan = (t[j + 1] === 'undefined') ? '' : t[j + 1] + '%';
                 if (temperature && (t[j] > temperature)) {
-                    temp = '<span class="error">' + temp + '</span>';
+                    temp = '<span class="text-danger">' + temp + '</span>';
                 }
                 tf += ((i > 0) ? splitter : '') + temp + ':' + fan;
             }
