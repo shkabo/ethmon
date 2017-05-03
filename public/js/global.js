@@ -120,7 +120,7 @@ function worker() {
             var tableContent = '';
             $.each(data.miners, function(index, miner) {
                 if (miner !== null) {
-                    var error_class = (miner.error === null) ? '' : ' class=error';
+                    var error_class = (miner.error === null) ? '' : ' class=text-danger';
                     var span = (data.hashrates) ? 8 : 6;
 
                     tableContent += '<tr' + error_class + '>';
@@ -142,10 +142,10 @@ function worker() {
                     } else {
                         tableContent += '<td>' + miner.uptime + '</td>';
                         tableContent += '<td>' + format_stats(miner.eth, eth, miner.target_eth, '<br>') + '</td>';
-                        tableContent += '<td>' + format_stats(miner.dcr, dcr, miner.target_dcr, '<br>', !miner.pools.split(';')[1]) + '</td>';
+                        //tableContent += '<td>' + format_stats(miner.dcr, dcr, miner.target_dcr, '<br>', !miner.pools.split(';')[1]) + '</td>';
                         if (data.hashrates) {
                             tableContent += '<td>' + format_hashrates(miner.eth_hr, '<br>') + '</td>';
-                            tableContent += '<td>' + format_hashrates(miner.dcr_hr, '<br>', !miner.pools.split(';')[1]) + '</td>';
+                            //tableContent += '<td>' + format_hashrates(miner.dcr_hr, '<br>', !miner.pools.split(';')[1]) + '</td>';
                         }
                         tableContent += '<td>' + format_temps(miner.temps, '<br>', miner.ti) + '</td>';
                         tableContent += '<td>' + format_pools(miner.pools, '<br>') + '</td>';
@@ -182,13 +182,13 @@ function worker() {
 
             // Update summary
             var summaryContent = '';
-            summaryContent += 'Total ETH/ETC hashrate: ' + format_stats(eth.join(';'), null, null, ', ') + '<br>';
-            summaryContent += 'Total DCR/SIA hashrate: ' + format_stats(dcr.join(';'), null, null, ', ');
+            summaryContent += 'Total ETH hashrate: ' + format_stats(eth.join(';'), null, null, ', ') + '<br>';
+            //summaryContent += 'Total DCR/SIA hashrate: ' + format_stats(dcr.join(';'), null, null, ', ');
             $('#minerSummary').html(summaryContent);
 
             // Display last update date/time and warning message
             var lastUpdated = 'Last updated: ' + data.updated +
-                ((warning.msg !== null) ? ('<br><span class="error">' + warning.msg + ', last seen good: ' + warning.last_good + '</span>') : '');
+                ((warning.msg !== null) ? ('<br><span class="text-danger">' + warning.msg + ', last seen good: ' + warning.last_good + '</span>') : '');
             $('#lastUpdated').html(lastUpdated).removeClass("error");
 
             // Update refresh interval if defined
