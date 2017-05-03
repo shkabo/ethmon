@@ -21,7 +21,7 @@ $(document).ready(function() {
 
 function worker() {
     var eth = [ 0, 0, 0 ];
-    var dcr = [ 0, 0, 0 ];
+    //var dcr = [ 0, 0, 0 ];
 
     function format_stats(stats, currency, target, splitter, skip) {
         if (!skip && stats) {
@@ -121,7 +121,7 @@ function worker() {
             $.each(data.miners, function(index, miner) {
                 if (miner !== null) {
                     var error_class = (miner.error === null) ? '' : ' class=text-danger';
-                    var span = (data.hashrates) ? 8 : 6;
+                    var span = (data.hashrates) ? 7 : 5;
 
                     tableContent += '<tr' + error_class + '>';
                     tableContent += '<td>' + miner.name + '</td>';
@@ -136,9 +136,9 @@ function worker() {
                     if (miner.error) {
                         error.msg = miner.error;
                         last_seen = '<br>Last seen: ' + miner.last_seen;
-                        tableContent += '<td colspan="' + span + '">' + miner.error + last_seen + '</td>';
+                        tableContent += '<td colspan="' + span + '" class="text-danger text-center">' + miner.error + last_seen + '</td>';
                     } else if (miner.offline) {
-                        tableContent += '<td colspan="' + span + '">' + miner.offline + '</td>';
+                        tableContent += '<td colspan="' + span + '" class="text-danger text-center"> Miner is set offline in configuration </td>';
                     } else {
                         tableContent += '<td>' + miner.uptime + '</td>';
                         tableContent += '<td>' + format_stats(miner.eth, eth, miner.target_eth, '<br>') + '</td>';
@@ -188,7 +188,7 @@ function worker() {
 
             // Display last update date/time and warning message
             var lastUpdated = 'Last updated: ' + data.updated +
-                ((warning.msg !== null) ? ('<br><span class="text-danger">' + warning.msg + ', last seen good: ' + warning.last_good + '</span>') : '');
+                ((warning.msg !== null) ? ('<br><span class="text-danger text-center">' + warning.msg + ', last seen good: ' + warning.last_good + '</span>') : '');
             $('#lastUpdated').html(lastUpdated).removeClass("error");
 
             // Update refresh interval if defined
