@@ -1,4 +1,5 @@
 {
+    "log_level": "ERROR",
     "title": "%HR% MH/s - Miner Monitor",
     "header": "Miner Monitor",
     "miner_poll": 5000,
