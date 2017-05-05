@@ -67,12 +67,18 @@ function worker() {
             var tnum = ti ? ti.length : (t.length / 2);
             for (var i = 0; i < tnum; ++i) {
                 var j = (ti ? ti[i] : i) * 2;
-                var temp = (t[j] === 'undefinded') ? 'Not readable' : t[j] + 'C';
-                var fan = (t[j + 1] === 'undefined') ? '' : t[j + 1] + '%';
+                var temp = t[j] + 'C';
+                var fan = t[j + 1] + '%';
                 if (temperature && (t[j] > temperature)) {
                     temp = '<span class="text-danger">' + temp + '</span>';
                 }
-                tf += ((i > 0) ? splitter : '') + temp + ':' + fan;
+
+                if (typeof t[j] === 'undefined') {
+                    tf += ((i > 0) ? splitter : '') + '<span class="text-danger">Not readable</span>';
+                } else {
+                    tf += ((i > 0) ? splitter : '') + temp + ':' + fan;
+                }
+                
             }
         }
         return tf;
@@ -121,7 +127,7 @@ function worker() {
             $.each(data.miners, function(index, miner) {
                 if (miner !== null) {
                     var error_class = (miner.error === null) ? '' : ' class=text-danger';
-                    var span = (data.hashrates) ? 7 : 5;
+                    var span = (data.hashrates) ? 6 : 5;
 
                     tableContent += '<tr' + error_class + '>';
                     tableContent += '<td>' + miner.name + '</td>';
@@ -187,9 +193,13 @@ function worker() {
             $('#minerSummary').html(summaryContent);
 
             // Display last update date/time and warning message
-            var lastUpdated = 'Last updated: ' + data.updated +
-                ((warning.msg !== null) ? ('<br><span class="text-danger text-center">' + warning.msg + ', last seen good: ' + warning.last_good + '</span>') : '');
+            var lastUpdated = 'Last updated: ' + data.updated;
             $('#lastUpdated').html(lastUpdated).removeClass("error");
+
+            $('#warningmsg').html('<br>');
+            if (warning.msg !== null) {
+                $('#warningmsg').html('<span class="text-danger text-center">' + warning.msg + ', last seen good: ' + warning.last_good + '</span>');
+            }
 
             // Update refresh interval if defined
             if (data.refresh !== undefined) {

@@ -7,6 +7,13 @@ block content
         // Miner info
         #minerInfo
             h2= title
+            .row
+                .col-md-12
+                    p.pull-right#warningmsg
+            .row
+                .col-md-12
+                    p.pull-left#minerSummary
+                    p.pull-right#lastUpdated
             
             table.table.table-bordered.table.hover
                 thead
@@ -16,14 +23,14 @@ block content
                     th ETH&nbsp;Stats
                     
                     if hashrates
-                        th ETH/ETC&nbsp;HR
+                        th ETH/CARD
                     
                     th Temp:Fan
                     th Pools
                     th Ver
                     th Comments
                 tbody
-        p#minerSummary
-        p#lastUpdated
+        
+        
         // /Miner info
     // /Wrapper
