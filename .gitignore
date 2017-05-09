@@ -34,3 +34,8 @@ node_modules
 
 # Production config.json
 config.json
+
+# Editor folders
+.vscode
+.idea
+.vs

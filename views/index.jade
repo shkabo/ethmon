@@ -14,22 +14,22 @@ block content
                 .col-md-12
                     p.pull-left#minerSummary
                     p.pull-right#lastUpdated
-            
-            table.table.table-bordered.table.hover
-                thead
-                    th Name
-                    th Host
-                    th Uptime
-                    th ETH&nbsp;Stats
-                    
-                    if hashrates
-                        th ETH/CARD
-                    
-                    th Temp:Fan
-                    th Pools
-                    th Ver
-                    th Comments
-                tbody
+            .table-responsive
+                table.table.table-hover
+                    thead
+                        th Name
+                        th Host
+                        th Uptime
+                        th ETH&nbsp;Stats
+                        
+                        if hashrates
+                            th ETH/CARD
+                        
+                        th Temp:Fan
+                        th Pools
+                        th Ver
+                        th Comments
+                    tbody
         
         
         // /Miner info

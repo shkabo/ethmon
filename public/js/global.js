@@ -31,6 +31,10 @@ function worker() {
 
             var s = stats.split(';');
 
+            var result = [];
+            result.error = false;
+            result.hash = '';
+            
             // Update totals
             if (currency !== null) {
                 currency[0] += Number(s[0]);
@@ -45,37 +49,21 @@ function worker() {
 
             // Check tolerance
             if ((target !== null) && tolerance) {
+                // hash rate is lower than our target - tolerance %
+                // throw warning on this .. something is not working as it should
                 if (s[0] / 1000 < target * (1 - tolerance)) {
-                    hashrate = '<span class="text-danger">' + hashrate + '</span>';
+                    hashrate = '<b>' + hashrate + '</b>';
+                    result.error = true;
                 } else if (s[0] / 1000 > target * (1 + tolerance)) {
-                    hashrate = '<span class="text-warning">' + hashrate + '</span>';
+                    // this is all good, our hash rate is higher than our target + tolerance %
+                    hashrate = '<b>' + hashrate + '</b>';
                 }
             }
 
-            return hashrate + splitter + shares + rejects;
+            result.hash = hashrate + splitter + shares + rejects;
+            return result;
         }
-        return '';
-    }
-
-    function format_stats_error(stats, currency, target) {
-        var error_status = false;
-
-        var s = stats.split(';');
-
-        // Update totals
-        if (currency !== null) {
-            currency[0] += Number(s[0]);
-            currency[1] += Number(s[1]);
-            currency[2] += Number(s[2]);
-        }
-
-        if ((target !== null) && tolerance) {
-            if (s[0] / 1000 < target * (1 - tolerance)) {
-                return true; // 
-            } else if (s[0] / 1000 > target * (1 + tolerance)) {
-                hashrate = '<span class="text-warning">' + hashrate + '</span>';
-            }
-        }
+        return result;
     }
 
     function format_temps(temps, splitter, ti) {
@@ -148,9 +136,10 @@ function worker() {
             $.each(data.miners, function (index, miner) {
                 console.log(miner);
                 if (miner !== null) {
-                    var error_class = (miner.error === null) ? '' : 'class=danger';
+                    var stats = format_stats(miner.eth, eth, miner.target_eth, '<br>');
+                    var error_class = (miner.error === null && stats.error === false) ? '' : ' class="warning"' ;
                     var span = (data.hashrates) ? 6 : 5;
-
+                    
                     tableContent += '<tr' + error_class + '>';
                     tableContent += '<td>' + miner.name + '</td>';
                     tableContent += '<td>' + miner.host + '</td>';
@@ -169,11 +158,9 @@ function worker() {
                         tableContent += '<td colspan="' + span + '" class="text-danger text-center"> Miner is set offline in configuration </td>';
                     } else {
                         tableContent += '<td>' + miner.uptime + '</td>';
-                        tableContent += '<td>' + format_stats(miner.eth, eth, miner.target_eth, '<br>') + '</td>';
-                        //tableContent += '<td>' + format_stats(miner.dcr, dcr, miner.target_dcr, '<br>', !miner.pools.split(';')[1]) + '</td>';
+                        tableContent += '<td>' + stats.hash + '</td>';
                         if (data.hashrates) {
                             tableContent += '<td>' + format_hashrates(miner.eth_hr, '<br>') + '</td>';
-                            //tableContent += '<td>' + format_hashrates(miner.dcr_hr, '<br>', !miner.pools.split(';')[1]) + '</td>';
                         }
                         tableContent += '<td>' + format_temps(miner.temps, '<br>', miner.ti) + '</td>';
                         tableContent += '<td>' + format_pools(miner.pools, '<br>') + '</td>';
@@ -211,7 +198,7 @@ function worker() {
             // Update summary
             var summaryContent = '';
             summaryContent += 'Total ETH hashrate: ' + format_stats(eth.join(';'), null, null, ', ');
-            //summaryContent += 'Total DCR/SIA hashrate: ' + format_stats(dcr.join(';'), null, null, ', ');
+            
             $('#minerSummary').html(summaryContent);
 
             // Display last update date/time and warning message
