@@ -16,7 +16,7 @@ Please notice that this sample will not work since contains comments not permitt
     "animation": [ "/", "-", "\\", "|" ],
 
     // The header of the page. If missing, title option will be used. %HR% will be replaced too
-    "header": "Miner Monitor",
+    "header": "Miner Monitor - %HR% MH/s",
 
     // Default miner poll interval in ms
     "miner_poll": 5000,
