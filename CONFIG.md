@@ -53,7 +53,6 @@ Please notice that this sample will not work since contains comments not permitt
 
             // Optional target hashrates in MH/s
             "target_eth": 118,
-            "target_dcr": 2700,
 
             // Miner comments. Use '<br>' for line breaks
             "comments": "ASUS 7950<br>Sapphire 390X<br>Sapphire 390X<br>Sapphire 390",
@@ -70,7 +69,7 @@ Please notice that this sample will not work since contains comments not permitt
             // Optional temperature index list.
             // Will show only temps for GPUs in the list in specified order if defined
             // and not empty. Will show temps for all cards as supplied by miner otherwise.
-            "ti": [ 1, 2 ]
+            "ti": [ 0, 1, 2 ]
         },
         {
             // Similar setting for other miners
