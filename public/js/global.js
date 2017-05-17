@@ -25,7 +25,6 @@ $(document).ready(function() {
 
 function worker() {
     var eth = [ 0, 0, 0 ];
-    //var dcr = [ 0, 0, 0 ];
 
     function format_stats(stats, currency, target, splitter, skip) {
         if (!skip && stats) {
@@ -138,7 +137,6 @@ function worker() {
 
             var tableContent = '';
             $.each(data.miners, function (index, miner) {
-                console.log(miner);
                 if (miner !== null) {
                     var stats = format_stats(miner.eth, eth, miner.target_eth, '<br>');
                     var error_class = (miner.error === null && stats.error === false) ? '' : ' class="warning"' ;
@@ -233,6 +231,8 @@ function worker() {
 
     });
 }
+
+// Dsisplay wallet info on the page
 function wallet() {
     function format_balance(balance){
         // eth balance has 18 decimals
@@ -242,7 +242,7 @@ function wallet() {
         return non_decimal + "." + decimal;
     }
 
-    if ($('.wallet').length > 0) {
+    if ($('.wallet').length > 0 && $('.wallet')) {
         $.ajax({
             url: 'https://api.etherscan.io/api?module=account&action=balance&address=' + $('.wallet').text(),
 
@@ -253,25 +253,25 @@ function wallet() {
                     $('#wallet-balance').addClass('text-warning');
                 }
                 // we're all good
-                if (data.status === "1") {
-                    console.log('success');
-                    // display data
-                    $('#wallet-balance').text( format_balance(data.result) + ' ETH' );
+                if (data.status === "1") {     
                     // check current class of element and remove it
                     // we only yse it to display the error ;)
-                    var element_classes = $('#wallet-balance').attr('class');
+                    var element_classes = $('#wallet-balance').prop('class');                    
                     if (element_classes.length > 0) {
                         $('#wallet-balance').removeClass();
                     }
-                    
+                    // display data
+                    $('#wallet-balance').html( format_balance(data.result) + ' ETH' );
                 }
             },
 
             error: function() {
+                // remove all classes, add warning class and display error message
                 $('#wallet-balance').removeClass().addClass('text-warning').text("We couldn't fetch the data ...");
             },
             
             complete: function() {
+                // set timer to rerun the call 
                 setTimeout(wallet, api_refresh);
             }
         });
