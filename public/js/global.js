@@ -256,7 +256,7 @@ function wallet() {
                 if (data.status === "1") {
                     console.log('success');
                     // display data
-                    $('#wallet-balance').text( format_balance(data.result) );
+                    $('#wallet-balance').text( format_balance(data.result) + ' ETH' );
                     // check current class of element and remove it
                     // we only yse it to display the error ;)
                     var element_classes = $('#wallet-balance').attr('class');
