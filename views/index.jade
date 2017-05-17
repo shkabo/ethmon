@@ -9,6 +9,11 @@ block content
             h2= title
             .row
                 .col-md-12
+                    if (typeof(wallet) !== 'undefined')
+                        p.pull-left Wallet: #[a(href="https://etherscan.io/address/#{wallet}").wallet #{wallet}]
+                            br 
+                            | Current balance: 
+                            span#wallet-balance
                     p.pull-right#warningmsg
             .row
                 .col-md-12

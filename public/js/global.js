@@ -2,6 +2,9 @@
 // Default web refresh interval (may be changed with web_refresh config option)
 var refresh = 5000;
 
+// Wallet API refresh interval to 1 minute
+var api_refresh = 60000;
+
 // Default hashrate tolerance (+/- to target hashrate)
 var tolerance = 0.05;
 
@@ -15,6 +18,7 @@ var animation_index = 0;
 
 $(document).ready(function() {
     worker();
+    wallet();
 });
 
 // Functions =============================================================
@@ -228,4 +232,48 @@ function worker() {
         }
 
     });
+}
+function wallet() {
+    function format_balance(balance){
+        // eth balance has 18 decimals
+        var decimal = balance.slice(-18);
+        // format non decimal part of the value - separate thousands by ,
+        var non_decimal = balance.slice(0, balance.length - 18).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return non_decimal + "." + decimal;
+    }
+
+    if ($('.wallet').length > 0) {
+        $.ajax({
+            url: 'https://api.etherscan.io/api?module=account&action=balance&address=' + $('.wallet').text(),
+
+            success: function(data) {
+                // if we didn't get good response, display error
+                if (data.status !== "1") {
+                    $('#wallet-balance').text("We couldn't fetch the data ...");
+                    $('#wallet-balance').addClass('text-warning');
+                }
+                // we're all good
+                if (data.status === "1") {
+                    console.log('success');
+                    // display data
+                    $('#wallet-balance').text( format_balance(data.result) );
+                    // check current class of element and remove it
+                    // we only yse it to display the error ;)
+                    var element_classes = $('#wallet-balance').attr('class');
+                    if (element_classes.length > 0) {
+                        $('#wallet-balance').removeClass();
+                    }
+                    
+                }
+            },
+
+            error: function() {
+                $('#wallet-balance').removeClass().addClass('text-warning').text("We couldn't fetch the data ...");
+            },
+            
+            complete: function() {
+                setTimeout(wallet, api_refresh);
+            }
+        });
+    }
 }

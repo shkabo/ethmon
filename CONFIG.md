@@ -3,6 +3,9 @@ Please notice that this sample will not work since contains comments not permitt
 
 ```javascript
 {
+    // Optional: Enter you full wallet address (0x.....) so you can monitor your balance
+    // Data is pulled from etherscan.io
+    "wallet": "",
     // Optional console log level (FATAL, ERROR, WARN, INFO, TRACE). Default is INFO
     "log_level": "WARN",
 
