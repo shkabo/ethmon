@@ -199,7 +199,8 @@ function worker() {
 
             // Update summary
             var summaryContent = '';
-            summaryContent += 'Total ETH hashrate: ' + format_stats(eth.join(';'), null, null, ', ');
+            var hashrate = format_stats(eth.join(';'), null, null, ', ');
+            summaryContent += 'Total ETH hashrate: ' + hashrate.hash;
             
             $('#minerSummary').html(summaryContent);
 
