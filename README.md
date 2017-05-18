@@ -22,11 +22,7 @@ This is a fork of [osnwt/ethmon](https://github.com/osnwt/ethmon) with my own ad
 ## :+1: the app ? Why not support it  
 If you find this app useful and wish to thank me or [@osnwt](https://github.com/osnwt) for developing it, here are donation addresses:
 
-<<<<<<< HEAD
 To buy me a :beer: or :coffee: click the Paypal badge below  
-=======
-To buy me a :beer: or :beers: click the Paypal image below  
->>>>>>> 3077ab12bceee127c58d42a704279967b54ecec9
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/shkabo) 
 
 If you want to donate to the initial author of ethmon [@osnwt](https://github.com/osnwt), you can do it on :
