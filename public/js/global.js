@@ -19,6 +19,7 @@ var animation_index = 0;
 $(document).ready(function() {
     worker();
     wallet();
+    
 });
 
 // Functions =============================================================
@@ -248,6 +249,7 @@ function wallet() {
             url: 'https://api.etherscan.io/api?module=account&action=balance&address=' + $('.wallet').text(),
 
             success: function(data) {
+                
                 // if we didn't get good response, display error
                 if (data.status !== "1") {
                     $('#wallet-balance').text("We couldn't fetch the data ...");
@@ -261,8 +263,10 @@ function wallet() {
                     if (element_classes.length > 0) {
                         $('#wallet-balance').removeClass();
                     }
-                    // display data
-                    $('#wallet-balance').html( format_balance(data.result) + ' ETH' );
+                    // we'll pass data to the coinbase api call and merge all together
+                    // process it and pack it up nicely for the user
+                    // in other way we skip 'flickering' of the current eth value on the page (2 different calls, 2x page update)
+                    coinbase( format_balance(data.result) );
                 }
             },
 
@@ -277,4 +281,39 @@ function wallet() {
             }
         });
     }
+}
+
+// get current ETH value
+function coinbase( eth_balance ) {
+    // save our balance so we can display it later
+    this.eth_balance = eth_balance;
+
+    //update display balance on the page
+    function calculate_balance(eth) {
+        // if we have balance, let's do the math :)
+        if (typeof(this.eth_balance) !== 'undefined') {
+            // our ether * eth value 
+            var balance = (this.eth_balance * (1/eth)).toFixed(2);
+            var eth_usd = (1/eth).toFixed(2); 
+            // display data to the user
+            $('#wallet-balance').html( this.eth_balance + ' ETH - <b>$' + balance + '</b> <span class="tiny">(@ $' + eth_usd + '/ETH)</span>');
+        }
+    }
+    $.ajax({
+        'url': "https://api.coinbase.com/v2/exchange-rates",
+        success: function(data) {
+            // if we have ether rate, let's process it
+            if (typeof data.data.rates.ETH !== 'undefined') {
+                calculate_balance(data.data.rates.ETH);
+            }
+        },
+        error: function() {
+            // if we fail to get response from API for some unknown reason,
+            // we at least want to display the current balance of our wallet
+            // it's better than nothing
+            if (typeof(this.eth_balance) !== 'undefined') {
+                $('#wallet-balance').html( this.eth_balance + ' ETH' );
+            }
+        }
+    });
 }
