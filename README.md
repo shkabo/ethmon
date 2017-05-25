@@ -4,7 +4,7 @@ Simple web application for Claymore's GPU Miner monitoring for **ETH mining ONLY
 Claymore's GPU Miner: [https://bitcointalk.org/index.php?topic=1433925](https://bitcointalk.org/index.php?topic=1433925)  
 This is a fork of [osnwt/ethmon](https://github.com/osnwt/ethmon) with my own additions
 
-
+![alt text](https://github.com/shkabo/ethmon/raw/master/screenshot.png "screenshot")  
 
 ## Installation
 * Install [nodejs and npm](http://nodejs.org)  for your system (tested on MacOSX, Ubuntu and Windows)
@@ -22,7 +22,7 @@ This is a fork of [osnwt/ethmon](https://github.com/osnwt/ethmon) with my own ad
 ## :+1: the app ? Why not support it  
 If you find this app useful and wish to thank me or [@osnwt](https://github.com/osnwt) for developing it, here are donation addresses:
 
-To buy me a :beer: or :coffee: click the Paypal badge below  
+To send me a :beer: or :coffee: click the Paypal badge below  
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/shkabo) 
 
 If you want to donate to the initial author of ethmon [@osnwt](https://github.com/osnwt), you can do it on :
